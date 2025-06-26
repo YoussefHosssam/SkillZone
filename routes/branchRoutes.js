@@ -4,6 +4,6 @@ const {getSingleBranch , deleteBranch , updateBranch , getNearbyBranches} = requ
 const {protect , restrictTo} = require (`${__dirname}/../middlewares/authMiddlewares.js`)
 
 //Branch Routes
-router.route('/:id').get(getSingleBranch).patch(protect , restrictTo("BranchAdmin" , "admin") , updateBranch).delete(protect , restrictTo("BranchAdmin" , "admin") , deleteBranch)
-router.route('/nearby').get(protect , getNearbyBranches)
+router.get('/nearby',  protect , getNearbyBranches)
+router.route('/:id').get(getSingleBranch).patch(protect , restrictTo("centerAdmin" , "admin") , updateBranch).delete(protect , restrictTo("centerAdmin" , "admin") , deleteBranch)
 module.exports = router

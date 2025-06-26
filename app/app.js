@@ -1,5 +1,9 @@
 const express = require('express');
 const morgan = require('morgan')
+const cors = require ('cors')
+const helmet = require ('helmet')
+const noSQli = require ('express-mongo-sanitize')
+const xssClean = require('xss-clean')
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser')
 const authRouter = require (`${__dirname}/../routes/authRoutes.js`)
@@ -23,6 +27,10 @@ const { undefinedRoute } = require('../utils/specificErrors');
 // const authRoutes = require('../routes/authRoutes');
 
 const app = express();
+app.use(helmet())
+app.use(cors())
+app.use(noSQli())
+app.use(xssClean())
 app.use(cookieParser())
 app.use(express.json());
 app.use(morgan("dev"))

@@ -1,5 +1,7 @@
 const docuemntFeatures = require(`${__dirname}/../utils/apiFeatures.js`)
 const qs = require ('qs')
+const AppError = require(`${__dirname}/../utils/errorHandleClass.js`);  
+
 const {successResponse} = require(`${__dirname}/../utils/successResponse.js`)
 
 const createDocument = async (req , res , next)=>{

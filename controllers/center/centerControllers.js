@@ -34,7 +34,6 @@ const updateCenter = asyncHandler(async (req , res , next)=>{
     const bodyKeys = Object.keys(body)
     bodyKeys.forEach(el => {if(!(updateableFields.includes(el))) {delete body[el]}})
     body.updatedAt = Date.now()
-    console.log(body)
     updateDocument(Center ,body , req , res , next)
 })
 
