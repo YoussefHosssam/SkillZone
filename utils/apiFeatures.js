@@ -1,5 +1,5 @@
 
-class centerFeatures {
+class apiFeatures {
     constructor (query , queryString){
         this.query = query 
         this.queryString = queryString
@@ -42,5 +42,5 @@ class centerFeatures {
         return this
     }
 }
-module.exports = centerFeatures
+module.exports = apiFeatures
     // const excludedFields = ['sort' , 'page' , 'limit' , 'fields']

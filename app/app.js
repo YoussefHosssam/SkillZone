@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser')
 const authRouter = require (`${__dirname}/../routes/authRoutes.js`)
 const centerRouter = require (`${__dirname}/../routes/centerRoutes.js`)
+const userRouter = require (`${__dirname}/../routes/userRoutes.js`)
+const branchRouter = require (`${__dirname}/../routes/branchRoutes.js`)
 
 // Handle uncaught exceptions first (sync code errors)
 process.on('uncaughtException', err => {
@@ -30,6 +32,8 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/v1/auth' , authRouter)
 app.use('/api/v1/centers' , centerRouter)
+app.use('/api/v1/users' , userRouter)
+app.use('/api/v1/branches' , branchRouter)
 // Handle undefined routes (404)
 app.all('/{*any}', undefinedRoute);
 

@@ -20,13 +20,15 @@ const centerSchema = mongoose.Schema({
     },
     contact: {
         email: { type : String  , validate : [validator.isEmail , "Invalid email"]},
-        phone : {type : String /*, validate : [validator.isMobilePhone , "Invalid Phone number"]*/}
+        phone : {type : String /*, validate : [validator.isMobilePhone , "Invalid Phone number"]*/},
+        address : String
     },
     socialMedia : {
         facebook: { type: String },
         linkedin: { type: String },
         instagram: { type: String },
     },
+    numberOfBranches : {type : Number , default : 0},
     createdAt : {type : Date , default : Date.now()},
     updatedAt  :Date ,
     isActive : {type : Boolean , default : true}

@@ -1,56 +1,44 @@
 const AppError = require(`${__dirname}/../../utils/errorHandleClass.js`);  
 const asyncHandler = require('express-async-handler');
 const Center = require(`${__dirname}/../../models/center/centerModel.js`)
-const centerFeatures = require(`${__dirname}/centerFeatures.js`)
 const {successResponse} = require(`${__dirname}/../../utils/successResponse.js`)
-const qs = require ('qs')
-
+const {getAllDocuments , getSingleDocument , deleteDocument , updateDocument} = require(`${__dirname}/../factoryHandler.js`)
 
 
 
 const getAllCenters = asyncHandler(async (req , res , next)=>{
-    const parsedQuery = qs.parse(req.originalUrl.split('?')[1] || '');
-    console.log(parsedQuery)
-    const features = new centerFeatures(Center.find(),parsedQuery).filter().sort().paginate(req).fields()
-    const centeres = await features.query 
-    successResponse(res , 200 , {data : {results : centeres.length , page : req.page , centeres}} )
+    getAllDocuments(Center , req , res , next)
 })
 const getSingleCenter = asyncHandler(async (req , res , next)=>{
-    const id = req.params.id ;
-    const center = await Center.findById(id)
-    if(center){
-        successResponse(res , 200 , {data : {result : center.length , center} } )
-    }
-    else{
-        return next(new AppError("No center found") , 404)
-    }
+    getSingleDocument(Center , req , res , next)
 })
-const CreateCenter = asyncHandler(async (req , res , next)=>{
+const createCenter = asyncHandler(async (req , res , next)=>{
     const {name , description , website , categories , contact , socialMedia} = req.body
-    const id = req.user.id ;
+    const ownerId = req.user.id ;
     if (req.user.role === "centerAdmin"){
-        const center = await Center.create({name , description , id , website , categories , contact , socialMedia })
+        const center = await Center.create({name , description , ownerId , website , categories , contact , socialMedia })
         center.isActive = undefined 
         center.__v = undefined 
-        const centerObj = center.toObject();
-        delete centerObj._id;
-        successResponse(res , 201 , {message : "Center created successfully" , data : centerObj } )
+        successResponse(res , 201 , {message : "Center created successfully" , data : center } )
     }
     else{
-        return next(new AppError("Unauthorized action") , 403)
+        return next(new AppError("Unauthorized action" , 403))
     }
 })
 const deleteCenter = asyncHandler(async (req , res , next)=>{
-
+    deleteDocument(Center , req , res , next)
 })
 const updateCenter = asyncHandler(async (req , res , next)=>{
-
+    const body = req.body
+    const updateableFields = ["name" , "description" , "website" , "categories" , "socialMedia" , "contact"]
+    const bodyKeys = Object.keys(body)
+    bodyKeys.forEach(el => {if(!(updateableFields.includes(el))) {delete body[el]}})
+    body.updatedAt = Date.now()
+    console.log(body)
+    updateDocument(Center ,body , req , res , next)
 })
 
 
 
 
-
-
-
-module.exports = {getAllCenters , getSingleCenter , CreateCenter , deleteCenter , updateCenter}
+module.exports = {getAllCenters , getSingleCenter , createCenter , deleteCenter , updateCenter}

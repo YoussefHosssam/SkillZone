@@ -1,7 +1,7 @@
-const {checkToken} = require(`${__dirname}/../../services/authServices.js`); 
-const AppError = require(`${__dirname}/../../utils/errorHandleClass.js`);  
+const {checkToken} = require(`${__dirname}/../services/authServices.js`); 
+const AppError = require(`${__dirname}/../utils/errorHandleClass.js`);  
 const asyncHandler = require('express-async-handler')
-const User = require(`${__dirname}/../../models/user/userModel.js`)
+const User = require(`${__dirname}/../models/user/userModel.js`)
 
 
 const protect = asyncHandler (async(req, res, next) => {

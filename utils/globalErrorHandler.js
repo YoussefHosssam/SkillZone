@@ -1,4 +1,4 @@
-const { handleCastErrorDB, handleDuplicateFieldsDB, handleValidationErrorDB} = require(`${__dirname}/specificErrors`);
+const { handleCastErrorDB, handleDuplicateFieldsDB, handleValidationErrorDB} = require(`${__dirname}/specificErrors.js`);
 const sendErrorDev = (err,res) => {
     res.status(err.statusCode).json({
         status: err.status,

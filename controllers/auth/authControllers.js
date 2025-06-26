@@ -8,8 +8,11 @@ const AppError = require(`${__dirname}/../../utils/errorHandleClass.js`);
 const asyncHandler = require('express-async-handler');
 const {successResponse} = require(`${__dirname}/../../utils/successResponse.js`)
 
-const authUserRegister = asyncHandler(async(req , res)=>{
+const authUserRegister = asyncHandler(async(req , res , next)=>{
     const {username , email , password , confirmPassword, role} = req.body ;
+    if(role.toLowerCase() === 'admin'){
+        return next(new AppError("Invalid registration information. Please try again." , 400))
+    }
     const newUser = User({username , email , password , confirmPassword , role});
     const token = await newUser.createEmailToken();
     await newUser.save()
@@ -18,7 +21,7 @@ const authUserRegister = asyncHandler(async(req , res)=>{
         sendEmail({from : process.env.EMAIL_MAIL , to : email , subject : "Verfiy email link" , message : `Your verfiy email link ${verifyLink} `})
     }
     catch(err){
-        next(new AppError("Something went wrong , Please try again later" , 500))
+        return next(new AppError("Something went wrong , Please try again later" , 500))
     }
     newUser.password = undefined ;
     newUser.verificationToken = undefined ;
@@ -124,8 +127,7 @@ const authUserResetPassword = asyncHandler(async(req , res , next)=>{
 })
 const authUserRefreshToken =asyncHandler(async(req , res , next)=>{
     const refreshToken = req.cookies.refreshToken;
-    const accessToken = req.cookies.accessToken ;
-    if(!refreshToken || !accessToken){
+    if(!refreshToken){
         next(new AppError("Invalid token. Please log in again.",401))
     }
     const {valid , decoded} = await checkToken(refreshToken , "REFRESH")
