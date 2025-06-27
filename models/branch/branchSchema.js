@@ -1,64 +1,66 @@
-const mongoose = require('mongoose');
-const validator = require('validator')
+const mongoose = require("mongoose");
+const validator = require("validator");
 const branchSchema = mongoose.Schema({
-    centerId : {
-        type : mongoose.SchemaTypes.ObjectId,
-        ref : "centers",
-        required : [true , "A branch must be associated with a center."]
+  centerId: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "centers",
+    required: [true, "A branch must be associated with a center."],
+  },
+  name: {
+    type: String,
+    required: [true, "A branch must have a name."],
+  },
+  address: {
+    street: {
+      type: String,
+      required: [true, "A branch address must have street"],
     },
-    name : {
-        type : String ,
-        required : [true , "A branch must have a name."]
+    city: {
+      type: String,
+      required: [true, "A branch address must have city"],
     },
-    address : {
-        street : {
-            type : String ,
-            required : [true , "A branch address must have street"]
-        },
-        city : {
-            type : String ,
-            required : [true , "A branch address must have city"]
-        },
-        postalCode : {
-            type : String ,
-            required : [true , "A branch address must have postalCode"]
-        },
-        country : {
-            type : String ,
-            default : "Egypt"
-        }
+    postalCode: {
+      type: String,
+      required: [true, "A branch address must have postalCode"],
     },
-    geoLocation : {
-        type : {
-            type : String ,
-            default : "Point",
-            enum : ["Point"]
-        },
-        coordinates: {
-            type: [Number],
-            required: [true, 'Coordinates are required']
-        }
+    country: {
+      type: String,
+      default: "Egypt",
     },
-    phone : {
-        type : String,
-        required : [true , "A branch must have phone number"]
+  },
+  geoLocation: {
+    type: {
+      type: String,
+      default: "Point",
+      enum: ["Point"],
     },
-    operatingHours : [{
-        day : String ,
-        start : String ,
-        close : String ,
-    }],
-    createdAt : {
-        type : Date,
-        default : Date.now()
+    coordinates: {
+      type: [Number],
+      required: [true, "Coordinates are required"],
     },
-    updatedAt : {
-        type : Date
+  },
+  phone: {
+    type: String,
+    required: [true, "A branch must have phone number"],
+  },
+  operatingHours: [
+    {
+      day: String,
+      start: String,
+      close: String,
     },
-    isActive : {
-        type : Boolean,
-        default : true
-    }
-})
+  ],
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  updatedAt: {
+    type: Date,
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
+});
 
-module.exports = branchSchema
+module.exports = branchSchema;
