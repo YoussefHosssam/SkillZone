@@ -53,6 +53,30 @@ const userSchema = new mongoose.Schema({
   lastUpdate: Date,
   lastLogin: Date,
   passwordUpdatedAt: Date,
+  //if student
+  studentDetails: {
+    ssn: String,
+    birthDate: String,
+    gender: {
+      type: String,
+      enum: ["Male", "Female"],
+    },
+    address: {
+      street: {
+        type: String,
+        required: [true, "A Student address must have street"],
+      },
+      city: {
+        type: String,
+        required: [true, "A Student address must have city"],
+      },
+      country: {
+        type: String,
+        default: "Egypt",
+      },
+    },
+    interestings: [String],
+  },
 });
 
 module.exports = userSchema;

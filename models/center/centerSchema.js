@@ -16,7 +16,8 @@ const centerSchema = mongoose.Schema({
   },
   website: { type: String, validate: [validator.isURL, "Invalid Website URL"] },
   categories: {
-    type: Array,
+    type: String,
+    enum: ["IT", "Cyber Security", "Programming", "DevOps", "Web Development", "Flutter", "Mobile Development"],
   },
   contact: {
     email: { type: String, validate: [validator.isEmail, "Invalid email"] },
@@ -30,9 +31,9 @@ const centerSchema = mongoose.Schema({
     linkedin: { type: String },
     instagram: { type: String },
   },
-  numberOfBranches: { type: Number, default: 0 },
+  numberOfBranches: { type: Number, default: 0 },  
+  isActive: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now() },
   updatedAt: Date,
-  isActive: { type: Boolean, default: true },
 });
 module.exports = centerSchema;

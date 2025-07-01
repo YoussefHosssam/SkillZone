@@ -138,6 +138,11 @@ const getNearbyBranches = asyncHandler(async (req, res, next) => {
   });
 });
 
+const getBranchCourses = asyncHandler(async (req, res, next) => {
+});
+const createBranchCourse = asyncHandler(async (req, res, next) => {
+});
+
 module.exports = {
   getAllBranches,
   createBranch,
@@ -145,4 +150,6 @@ module.exports = {
   updateBranch,
   deleteBranch,
   getNearbyBranches,
+  getBranchCourses,
+  createBranchCourse,
 };
