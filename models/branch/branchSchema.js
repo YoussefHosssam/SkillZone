@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
-const validator = require("validator");
 const branchSchema = mongoose.Schema({
   centerId: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: "centers",
     required: [true, "A branch must be associated with a center."],
+  },
+  adminId: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "users",
+    required: [true, "A branch must be associated with an admin."],
   },
   name: {
     type: String,

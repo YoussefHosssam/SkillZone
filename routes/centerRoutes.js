@@ -34,14 +34,4 @@ router
   .get(getAllBranches)
   .post(protect, restrictTo("centerAdmin", "admin"), createBranch);
 
-//Course Routes
-const {
-  getCenterInstructors,
-  createCenterInstructors,
-} = require(`${__dirname}/../controllers/instructor/instructorControllers.js`);
-router
-  .route("/:id/instructors")
-  .get(getCenterInstructors)
-  .post(protect, restrictTo("centerAdmin", "admin"), createCenterInstructors);
-
 module.exports = router;

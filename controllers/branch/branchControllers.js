@@ -41,6 +41,7 @@ const createBranch = asyncHandler(async (req, res, next) => {
       phone,
       operatingHours,
       centerId,
+      adminId : userId
     });
     branch.isActive = undefined;
     branch.__v = undefined;
@@ -137,12 +138,6 @@ const getNearbyBranches = asyncHandler(async (req, res, next) => {
     data: { results: branches.length, page, branches },
   });
 });
-
-const getBranchCourses = asyncHandler(async (req, res, next) => {
-});
-const createBranchCourse = asyncHandler(async (req, res, next) => {
-});
-
 module.exports = {
   getAllBranches,
   createBranch,
@@ -150,6 +145,4 @@ module.exports = {
   updateBranch,
   deleteBranch,
   getNearbyBranches,
-  getBranchCourses,
-  createBranchCourse,
 };

@@ -6,9 +6,14 @@ const {
   deleteBranch,
   updateBranch,
   getNearbyBranches,
+} = require(`${__dirname}/../controllers/branch/branchControllers.js`);
+const {
   getBranchCourses,
   createBranchCourse,
-} = require(`${__dirname}/../controllers/branch/branchControllers.js`);
+} = require(`${__dirname}/../controllers/course/courseControllers.js`);
+const {
+  getBranchInstructors,
+} = require(`${__dirname}/../controllers/instructor/instructorControllers.js`);
 const {
   protect,
   restrictTo,
@@ -22,7 +27,10 @@ router
   .patch(protect, restrictTo("centerAdmin", "admin"), updateBranch)
   .delete(protect, restrictTo("centerAdmin", "admin"), deleteBranch);
 router
-  .get("/:id/courses")
-  .post(protect, restrictTo("centerAdmin", "admin"), createBranchCourse)
-  .get(protect, restrictTo("centerAdmin", "admin"), getBranchCourses);
+  .route("/:id/courses")
+  .get(getBranchCourses)
+  .post(protect, restrictTo("centerAdmin", "admin"), createBranchCourse);
+router
+  .route("/:id/instructors")
+  .get(protect , getBranchInstructors)
 module.exports = router;

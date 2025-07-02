@@ -14,7 +14,7 @@ const courseRouter = express.Router();
 courseRouter.route("/").get(getAllCourses);
 
 courseRouter
-  .route("/:id")
+  .route("/:slug")
   .get(getCourse)
   .patch(protect, restrictTo("centerAdmin", "admin"), updateCourse)
   .delete(protect, restrictTo("centerAdmin", "admin"), deleteCourse);

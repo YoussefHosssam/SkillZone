@@ -1,3 +1,30 @@
+const courseCategories = [
+  "Programming",
+  "Data Science",
+  "Design",
+  "Marketing",
+  "Business",
+  "Languages",
+  "Music",
+  "Photography",
+  "Personal Development",
+  "Finance & Accounting",
+  "Health & Fitness",
+  "Engineering",
+  "School Subjects",
+  "Test Preparation",
+  "Art & Craft",
+  "Beauty & Makeup",
+  "Cooking",
+  "Sports & Athletics",
+  "Software Tools",
+  "Cyber Security",
+  "Networking",
+  "Game Development",
+  "AI & Machine Learning",
+  "Cloud Computing",
+  "Entrepreneurship",
+];
 const mongoose = require("mongoose");
 const validator = require("validator");
 const centerSchema = mongoose.Schema({
@@ -17,12 +44,12 @@ const centerSchema = mongoose.Schema({
   website: { type: String, validate: [validator.isURL, "Invalid Website URL"] },
   categories: {
     type: String,
-    enum: ["IT", "Cyber Security", "Programming", "DevOps", "Web Development", "Flutter", "Mobile Development"],
+    enum: courseCategories
   },
   contact: {
     email: { type: String, validate: [validator.isEmail, "Invalid email"] },
     phone: {
-      type: String /*, validate : [validator.isMobilePhone , "Invalid Phone number"]*/,
+      type: String
     },
     address: String,
   },

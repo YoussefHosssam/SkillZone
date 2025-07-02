@@ -4,17 +4,13 @@ const {
   restrictTo,
 } = require(`${__dirname}/../middlewares/authMiddlewares.js`);
 const {
-  getInstructor,
-  updateInstructor,
-  deleteInstructor,
+  getInstructorCourses
 } = require(`${__dirname}/../controllers/instructor/instructorControllers.js`);
 const express = require("express");
 const instructorRouter = express.Router();
 
 instructorRouter
-  .route("/:id")
-  .get(protect,getInstructor)
-  .patch(protect, restrictTo("centerAdmin", "admin"), updateInstructor)
-  .delete(protect, restrictTo("centerAdmin", "admin"), deleteInstructor);
+  .route("/:slug/courses")
+  .get(protect,getInstructorCourses)
 
   module.exports = instructorRouter

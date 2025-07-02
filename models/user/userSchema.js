@@ -1,3 +1,30 @@
+const courseCategories = [
+  "Programming",
+  "Data Science",
+  "Design",
+  "Marketing",
+  "Business",
+  "Languages",
+  "Music",
+  "Photography",
+  "Personal Development",
+  "Finance & Accounting",
+  "Health & Fitness",
+  "Engineering",
+  "School Subjects",
+  "Test Preparation",
+  "Art & Craft",
+  "Beauty & Makeup",
+  "Cooking",
+  "Sports & Athletics",
+  "Software Tools",
+  "Cyber Security",
+  "Networking",
+  "Game Development",
+  "AI & Machine Learning",
+  "Cloud Computing",
+  "Entrepreneurship",
+];
 const mongoose = require("mongoose");
 const validator = require("validator");
 const userSchema = new mongoose.Schema({
@@ -75,7 +102,10 @@ const userSchema = new mongoose.Schema({
         default: "Egypt",
       },
     },
-    interestings: [String],
+    interestings: {
+      type: String,
+      enum: courseCategories,
+    },
   },
 });
 
