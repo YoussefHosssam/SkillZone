@@ -1,6 +1,7 @@
 const {
   protect,
   restrictTo,
+  isRelatedCourse,
 } = require(`${__dirname}/../middlewares/authMiddlewares.js`);
 const {
   getAllCourses,
@@ -15,8 +16,17 @@ courseRouter.route("/").get(getAllCourses);
 
 courseRouter
   .route("/:slug")
-  .get(getCourse)
-  .patch(protect, restrictTo("centerAdmin", "admin"), updateCourse)
-  .delete(protect, restrictTo("centerAdmin", "admin"), deleteCourse);
-
+  .get(protect, restrictTo("centerAdmin", "admin"), isRelatedCourse, getCourse)
+  .patch(
+    protect,
+    restrictTo("centerAdmin", "admin"),
+    isRelatedCourse,
+    updateCourse
+  )
+  .delete(
+    protect,
+    restrictTo("centerAdmin", "admin"),
+    isRelatedCourse,
+    deleteCourse
+  ); //allnew
 module.exports = courseRouter;

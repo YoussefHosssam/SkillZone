@@ -41,7 +41,7 @@ const createBranch = asyncHandler(async (req, res, next) => {
       phone,
       operatingHours,
       centerId,
-      adminId : userId
+      adminId: userId,
     });
     branch.isActive = undefined;
     branch.__v = undefined;

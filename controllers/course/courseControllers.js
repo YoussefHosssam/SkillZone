@@ -15,7 +15,7 @@ const getAllCourses = asyncHandler(async (req, res, next) => {
 });
 const getCourse = asyncHandler(async (req, res, next) => {
   const { slug } = req.params;
-  const course = await Course.findOne(slug);
+  const course = await Course.findOne({ slug });
   if (course) {
     successResponse(res, 200, {
       message: "Course found successfully",
@@ -41,7 +41,7 @@ const updateCourse = asyncHandler(async (req, res, next) => {
     "requirments",
     "isActive",
     "isFull",
-    "instructorDetails"
+    "instructorDetails",
   ];
   const bodyKeys = Object.keys(body);
   bodyKeys.forEach((el) => {
@@ -50,11 +50,10 @@ const updateCourse = asyncHandler(async (req, res, next) => {
     }
   });
   body.updatedAt = Date.now();
-  const course = await Course.updateOne(slug, body, {
-    new: true,
-    runValidators: true,
-  });
+  const course = await Course.findOne({ slug });
   if (course) {
+    Object.assign(course, body);
+    await course.save();
     successResponse(res, 200, {
       message: "Course Updated successfully",
       data: course,
@@ -65,19 +64,20 @@ const updateCourse = asyncHandler(async (req, res, next) => {
 });
 const deleteCourse = asyncHandler(async (req, res, next) => {
   const { slug } = req.params;
-  const course = await Course.deleteOne(slug);
+  const course = await Course.deleteOne({ slug });
   if (course) {
     successResponse(res, 204, { message: "Course Deleted successfully" });
   } else {
     return next(new AppError("Course not found", 404));
   }
 });
+const notificationEvent = require(`${__dirname}/../../events/notificationEventBus.js`);
 const createBranchCourse = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const branch = await Branch.findById(id);
   if (
     branch &&
-    branch.adminId === req.user.id &&
+    branch.adminId == req.user.id &&
     req.user.role === "centerAdmin"
   ) {
     const body = req.body;
@@ -94,7 +94,7 @@ const createBranchCourse = asyncHandler(async (req, res, next) => {
       "requirments",
       "isActive",
       "isFull",
-      "instructorDetails"
+      "instructorDetails",
     ];
     const bodyKeys = Object.keys(body);
     bodyKeys.forEach((el) => {
@@ -104,6 +104,7 @@ const createBranchCourse = asyncHandler(async (req, res, next) => {
     });
     body.branchId = id;
     const course = await Course.create(body);
+    notificationEvent.emit("NewCourseCreated", course);
     return successResponse(res, 201, {
       message: "Course created successfully",
       data: course,
@@ -115,7 +116,10 @@ const createBranchCourse = asyncHandler(async (req, res, next) => {
 const getBranchCourses = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const parsedQuery = qs.parse(req.originalUrl.split("?")[1] || "");
-  const features = new docuemntFeatures(Model.find({branchId : id}), parsedQuery)
+  const features = new docuemntFeatures(
+    Course.find({ branchId: id }),
+    parsedQuery
+  )
     .filter()
     .sort()
     .paginate(req)

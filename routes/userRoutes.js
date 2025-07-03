@@ -5,6 +5,7 @@ const {
   updateUser,
   updateUserPassword,
   updateUserEmail,
+  deactivateUserAccount,
 } = require(`${__dirname}/../controllers/user/userControllers.js`);
 const {
   protect,
@@ -15,4 +16,5 @@ const {
 router.route("/me").get(protect, getSingleUser).patch(protect, updateUser);
 router.route("/me/change-password").patch(protect, updateUserPassword);
 router.route("/me/change-email").patch(protect, updateUserEmail);
+router.route("/me/deactivate-account").post(protect, deactivateUserAccount); //new
 module.exports = router;

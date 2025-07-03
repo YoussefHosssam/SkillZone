@@ -1,0 +1,64 @@
+[
+  {
+    "username": "ahmedmohamed",
+    "email": "ahmed.mohamed@example.com",
+    "emailVerified": true,
+    "password": "password123",
+    "confirmPassword": "password123",
+    "phone": "+201234567890",
+    "role": "student",
+    "studentInformation": {
+      "ssn": "12345678901234",
+      "birthDate": "1995-05-15",
+      "gender": "Male",
+      "address": {
+        "street": "15 Mohamed Ali Street",
+        "city": "Cairo",
+        "country": "Egypt"
+      },
+      "interestings": "Programming"
+    },
+    "isActive": true
+  },
+  {
+    "username": "fatmaelsayed",
+    "email": "fatma.elsayed@example.com",
+    "emailVerified": true,
+    "password": "password123",
+    "confirmPassword": "password123",
+    "phone": "+201112345678",
+    "role": "student",
+    "studentInformation": {
+      "ssn": "23456789012345",
+      "birthDate": "1998-08-22",
+      "gender": "Female",
+      "address": {
+        "street": "22 El Gomhoria Street",
+        "city": "Alexandria",
+        "country": "Egypt"
+      },
+      "interestings": "Design"
+    },
+    "isActive": true
+  },
+  {
+    "username": "mohamedali",
+    "email": "mohamed.ali@example.com",
+    "emailVerified": true,
+    "password": "password123",
+    "confirmPassword": "password123",
+    "phone": "+201001234567",
+    "role": "centerAdmin",
+    "isActive": true
+  },
+  {
+    "username": "amirahmed",
+    "email": "amira.ahmed@example.com",
+    "emailVerified": true,
+    "password": "password123",
+    "confirmPassword": "password123",
+    "phone": "+201554321098",
+    "role": "admin",
+    "isActive": true
+  }
+]

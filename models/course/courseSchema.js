@@ -26,7 +26,7 @@ const courseCategories = [
   "Entrepreneurship",
 ];
 const mongoose = require("mongoose");
-const validator = require('validator')
+const validator = require("validator");
 const courseSchema = new mongoose.Schema({
   slug: String,
   branchId: {
@@ -81,11 +81,9 @@ const courseSchema = new mongoose.Schema({
     fullname: {
       type: String,
       required: [true, "Instructor name is required"],
-      unique :true 
+      unique: true,
     },
-    fullnameSlug: {
-      type: String,
-    },
+    fullnameSlug: String,
     bio: {
       type: String,
       required: [true, "Instructor bio is required"],

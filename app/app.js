@@ -37,6 +37,7 @@ const branchRouter = require(`${__dirname}/../routes/branchRoutes.js`);
 const instructorRouter = require(`${__dirname}/../routes/instructorRoutes.js`);
 const courseRouter = require(`${__dirname}/../routes/courseRoutes.js`);
 const studentRouter = require(`${__dirname}/../routes/studentRoutes.js`);
+const notificationRouter = require(`${__dirname}/../routes/notificationRoutes.js`);
 const { undefinedRoute } = require(`${__dirname}/../utils/specificErrors`);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/centers", centerRouter);
@@ -45,6 +46,7 @@ app.use("/api/v1/branches", branchRouter);
 app.use("/api/v1/instructors", instructorRouter);
 app.use("/api/v1/courses", courseRouter);
 app.use("/api/v1/students", studentRouter);
+app.use("/api/v1/notifications", notificationRouter);
 // Handle undefined routes (404)
 app.all("/{*any}", undefinedRoute);
 

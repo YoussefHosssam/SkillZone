@@ -81,7 +81,7 @@ const userSchema = new mongoose.Schema({
   lastLogin: Date,
   passwordUpdatedAt: Date,
   //if student
-  studentDetails: {
+  studentInformation: {
     ssn: String,
     birthDate: String,
     gender: {
@@ -91,11 +91,9 @@ const userSchema = new mongoose.Schema({
     address: {
       street: {
         type: String,
-        required: [true, "A Student address must have street"],
       },
       city: {
         type: String,
-        required: [true, "A Student address must have city"],
       },
       country: {
         type: String,
@@ -106,6 +104,10 @@ const userSchema = new mongoose.Schema({
       type: String,
       enum: courseCategories,
     },
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
   },
 });
 

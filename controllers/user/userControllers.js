@@ -1,12 +1,12 @@
 const AppError = require(`${__dirname}/../../utils/errorHandleClass.js`);
 const asyncHandler = require("express-async-handler");
 const docuemntFeatures = require(`${__dirname}/../../utils/apiFeatures.js`);
+const { deleteTokens } = require(`${__dirname}/../../services/authServices.js`);
+
 const {
   successResponse,
 } = require(`${__dirname}/../../utils/successResponse.js`);
 const User = require(`${__dirname}/../../models/user/userModel.js`);
-const { deleteTokens } = require(`${__dirname}/../../services/authServices.js`);
-
 const getSingleUser = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
   const user = await User.findById(userId);
@@ -22,11 +22,11 @@ const getSingleUser = asyncHandler(async (req, res, next) => {
   });
 });
 const updateUser = asyncHandler(async (req, res, next) => {
-  const { username, phone } = req.body;
+  const { username, phone, studentInformation } = req.body;
   const userId = req.user.id;
   const user = await User.findByIdAndUpdate(
     userId,
-    { username, phone },
+    { username, phone, studentInformation },
     { new: true, runValidators: true }
   );
   if (!user) {
@@ -73,10 +73,27 @@ const updateUserPassword = asyncHandler(async (req, res, next) => {
 });
 
 const updateUserEmail = asyncHandler(async (req, res, next) => {});
+const deactivateUserAccount = asyncHandler(async (req, res, next) => {
+  const userId = req.user.id;
+  const user = await User.findByIdAndUpdate(
+    { _id: userId },
+    { isActive: false }
+  );
+  if (user) {
+    deleteTokens(res);
+    successResponse(res, 200, {
+      message: "User deactivated successfully",
+      data: user.studentInformation,
+    });
+  } else {
+    return next(new AppError("Unauthorized action", 403));
+  }
+});
 
 module.exports = {
   getSingleUser,
   updateUser,
   updateUserPassword,
   updateUserEmail,
+  deactivateUserAccount,
 };

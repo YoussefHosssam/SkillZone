@@ -44,12 +44,12 @@ const centerSchema = mongoose.Schema({
   website: { type: String, validate: [validator.isURL, "Invalid Website URL"] },
   categories: {
     type: String,
-    enum: courseCategories
+    enum: courseCategories,
   },
   contact: {
     email: { type: String, validate: [validator.isEmail, "Invalid email"] },
     phone: {
-      type: String
+      type: String,
     },
     address: String,
   },
@@ -58,7 +58,7 @@ const centerSchema = mongoose.Schema({
     linkedin: { type: String },
     instagram: { type: String },
   },
-  numberOfBranches: { type: Number, default: 0 },  
+  numberOfBranches: { type: Number, default: 0 },
   isActive: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now() },
   updatedAt: Date,

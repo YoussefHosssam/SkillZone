@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const mongoose = require("mongoose");
-const asyncHandler = require("express-async-handler");
 const userSchema = require(`${__dirname}/userSchema.js`);
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
@@ -49,5 +48,9 @@ userSchema.methods.updateLastUpdate = function () {
   this.lastUpdate = Date.now();
   this.save({ validateBeforeSave: false });
 };
+userSchema.pre(/^find/, function (next) {
+  this.find({ isActive: { $ne: false } });
+  next();
+});
 const User = mongoose.model("users", userSchema);
 module.exports = User;

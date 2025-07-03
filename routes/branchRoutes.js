@@ -29,8 +29,6 @@ router
 router
   .route("/:id/courses")
   .get(getBranchCourses)
-  .post(protect, restrictTo("centerAdmin", "admin"), createBranchCourse);
-router
-  .route("/:id/instructors")
-  .get(protect , getBranchInstructors)
+  .post(protect, restrictTo("centerAdmin", "admin"), createBranchCourse); //new
+router.route("/:id/instructors").get(protect, getBranchInstructors); //new
 module.exports = router;

@@ -2,6 +2,7 @@ const { checkToken } = require(`${__dirname}/../services/authServices.js`);
 const AppError = require(`${__dirname}/../utils/errorHandleClass.js`);
 const asyncHandler = require("express-async-handler");
 const User = require(`${__dirname}/../models/user/userModel.js`);
+const Course = require(`${__dirname}/../models/course/courseModel.js`);
 const { deleteTokens } = require(`${__dirname}/../services/authServices.js`);
 
 const protect = asyncHandler(async (req, res, next) => {
@@ -42,11 +43,23 @@ const restrictTo =
     next();
   };
 const isAlreadyLoggedIn = (req, res, next) => {
-  console.log(req.cookies.refreshToken);
-  if (req.cookies.refreshToken) {
+  if (req.cookies.accessToken) {
     return next(new AppError("You are already logged in.", 400));
   }
   next();
 };
 
-module.exports = { protect, restrictTo, isAlreadyLoggedIn };
+const isRelatedCourse = asyncHandler(async (req, res, next) => {
+  const { slug } = req.params;
+  const course = await Course.findOne({ slug }).populate({
+    path: "branchId",
+  });
+  console.log(course.branchId.adminId);
+  if (req.user.id == course.branchId.adminId) {
+    next();
+  } else {
+    return next(new AppError("Unauthorized action", 403));
+  }
+});
+
+module.exports = { protect, restrictTo, isAlreadyLoggedIn, isRelatedCourse };
