@@ -3,8 +3,11 @@ const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 const dotenv = require("dotenv");
+const MongoStore = require("connect-mongo");
 const cookieParser = require("cookie-parser");
 const sanitizeMiddleware = require(`${__dirname}/../middlewares/sanitizeInput.js`);
+const session = require("express-session");
+const passport = require("passport");
 
 // Handle uncaught exceptions first (sync code errors)
 process.on("uncaughtException", (err) => {
@@ -15,7 +18,7 @@ process.on("uncaughtException", (err) => {
 
 // Load env vars
 dotenv.config({ path: `${__dirname}/../.env` });
-
+require("../config/passport.js"); // 🔁 Make sure you load this!
 const { connect } = require("../config/dbConnection");
 const globalErrorHandler = require("../utils/globalErrorHandler");
 // const authRoutes = require('../routes/authRoutes');
@@ -28,7 +31,24 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
-
+app.use(
+  session({
+    secret: "S3cr3t_Ke7",
+    saveUninitialized: true,
+    resave: false,
+    cookie: { secure: false }, // true only if you're using HTTPS
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      collectionName: "sessions",
+      ttl: 14 * 24 * 60 * 60, // Optional: 14 days
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+    },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 // Routes
 const authRouter = require(`${__dirname}/../routes/authRoutes.js`);
 const centerRouter = require(`${__dirname}/../routes/centerRoutes.js`);

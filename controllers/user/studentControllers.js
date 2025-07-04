@@ -9,11 +9,7 @@ const addStudentInformation = asyncHandler(async (req, res, next) => {
   const body = req.body;
   const userId = req.user.id;
   const creatableFields = [
-    "ssn",
-    "birthDate",
-    "gender",
-    "address",
-    "intersting",
+    "studentInformation"
   ];
   const bodyKeys = Object.keys(body);
   bodyKeys.forEach((el) => {

@@ -6,6 +6,11 @@ const Course = require(`${__dirname}/../models/course/courseModel.js`);
 const { deleteTokens } = require(`${__dirname}/../services/authServices.js`);
 
 const protect = asyncHandler(async (req, res, next) => {
+  console.log(req.user);
+  if (req.user.googleId && req.isAuthenticated()) {
+    return next();
+  }
+
   const accessToken = req.cookies.accessToken;
   if (!accessToken) {
     return next(new AppError("You are not logged in! Please log in.", 401));

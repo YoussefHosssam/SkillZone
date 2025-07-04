@@ -28,6 +28,7 @@ const courseCategories = [
 const mongoose = require("mongoose");
 const validator = require("validator");
 const userSchema = new mongoose.Schema({
+  googleId : String ,
   username: {
     type: String,
     required: [true, "Username is required"],
@@ -82,7 +83,7 @@ const userSchema = new mongoose.Schema({
   passwordUpdatedAt: Date,
   //if student
   studentInformation: {
-    ssn: String,
+    ssn: {type : String , unique : true},
     birthDate: String,
     gender: {
       type: String,

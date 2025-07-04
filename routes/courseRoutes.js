@@ -16,7 +16,7 @@ courseRouter.route("/").get(getAllCourses);
 
 courseRouter
   .route("/:slug")
-  .get(protect, restrictTo("centerAdmin", "admin"), isRelatedCourse, getCourse)
+  .get(protect, getCourse)
   .patch(
     protect,
     restrictTo("centerAdmin", "admin"),

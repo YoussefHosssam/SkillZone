@@ -8,6 +8,9 @@ const {
   authUserRefreshToken,
   authUserlogOut,
 } = require(`${__dirname}/../controllers/auth/authControllers.js`);
+// const {
+// } = require(`${__dirname}/../controllers/auth/oauthControllers.js`);
+const passport = require("passport");
 const {
   protect,
   isAlreadyLoggedIn,
@@ -24,5 +27,10 @@ router
   .post(isAlreadyLoggedIn, authUserResetPassword);
 router.route("/refresh-token").post(authUserRefreshToken);
 router.route("/logout").post(protect, authUserlogOut);
+router.route("/google").get(passport.authenticate("google" , {scope : ["profile" , "email"]}) );
+router.get("/google/callback",passport.authenticate("google" , {failureRedirect: "/login"}) , (req , res)=>{
+  res.status(201).json({message : "User logged in successfully" , user : req.user})
+});
+
 
 module.exports = router;
