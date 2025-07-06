@@ -49,7 +49,6 @@ Key endpoints:
 | `POST`      | `/auth/login`                | User login                   |
 | `GET`       | `/branches/nearby?lat=&lng=` | Find nearby branches         |
 | `POST`      | `/branches/:id/courses`      | Add course to branch         |
-| `POST`      | `/reviews`                   | Submit review                |
 
 ## Database Setup 🗄️
 The application uses MongoDB with the following collections:
