@@ -7,10 +7,12 @@ const courseCategories = [
   "Languages",
   "Music",
   "Photography",
+  "Artificial Intelligence",
   "Personal Development",
   "Finance & Accounting",
   "Health & Fitness",
   "Engineering",
+  "Cybersecurity",
   "School Subjects",
   "Test Preparation",
   "Art & Craft",
@@ -43,7 +45,7 @@ const centerSchema = mongoose.Schema({
   },
   website: { type: String, validate: [validator.isURL, "Invalid Website URL"] },
   categories: {
-    type: String,
+    type: [String],
     enum: courseCategories,
   },
   contact: {

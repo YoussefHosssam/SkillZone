@@ -119,7 +119,7 @@ const authUserForgotPassword = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email: email });
   if (user) {
     try {
-      const token = user.createRandomToken();
+      const token = user.createResetToken();
       await user.save({ validateBeforeSave: false });
       const resetLink = `${req.protocol}://${req.get(
         "host"
@@ -131,6 +131,7 @@ const authUserForgotPassword = asyncHandler(async (req, res, next) => {
         message: `Your reset password link ${resetLink} `,
       });
     } catch (err) {
+      console.log(err)
       user.resetPasswordToken = undefined;
       user.resetPasswordExpire = undefined;
       await user.save({ validateBeforeSave: false });
