@@ -39,8 +39,7 @@ SkillZone is a backend API for managing educational centers, branches, courses, 
 ## API Documentation 📚
 
 Full API documentation available via:
-- [Swagger UI](http://your-api-url/docs) (when deployed)
-- [Postman Collection]([link-to-postman](https://documenter.getpostman.com/view/45606507/2sB34coNVf)) (optional)
+- [Postman Collection](https://documenter.getpostman.com/view/45606507/2sB34coNVf)
 
 Key endpoints:
 | Type        | Endpoint                     | Description                  |
